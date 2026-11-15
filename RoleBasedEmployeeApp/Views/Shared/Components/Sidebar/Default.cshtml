@@ -1,0 +1,12 @@
+﻿@model List<RoleBasedEmployeeApp.Models.MenuItem>
+
+<ul class="nav nav-pills flex-column">
+    @foreach (var m in Model)
+    {
+        <li class="nav-item">
+            <a class="nav-link text-white" href="@m.Url">
+                <i class="bi @m.Icon me-2"></i>@m.Title
+            </a>
+        </li>
+    }
+</ul>

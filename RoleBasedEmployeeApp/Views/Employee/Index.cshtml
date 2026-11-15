@@ -1,0 +1,54 @@
+﻿@model List<Employee>
+@{
+    ViewData["Title"] = "Employees";
+    var perm = (Permission)ViewBag.Permission;
+}
+
+<h2>Employees</h2>
+
+@if (perm.CanAdd)
+{
+    <a asp-action="Create" class="btn btn-primary mb-3">Add Employee</a>
+}
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Gender</th>
+            <th>Age</th>
+            <th>Designation</th>
+            <th>City</th>
+            <th>Department</th>
+            <th>Joined</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var e in Model)
+        {
+            <tr>
+                <td>@e.Name</td>
+                <td>@e.Gender</td>
+                <td>@e.Age</td>
+                <td>@e.Designation</td>
+                <td>@e.City</td>
+                <td>@(e.DepartmentName ?? "—")</td>
+                <td>@e.JoinDate?.ToString("dd MMM yyyy")</td>
+                <td>
+                    @if (perm.CanEdit)
+                    {
+                        <a asp-action="Edit" asp-route-id="@e.EmployeeId" class="btn btn-sm btn-warning">Edit</a>
+                    }
+                    @if (perm.CanDelete)
+                    {
+                        <form asp-action="Delete" asp-route-id="@e.EmployeeId" method="post"
+                              class="d-inline" onsubmit="return confirm('Delete this employee?');">
+                            <button class="btn btn-sm btn-danger">Delete</button>
+                        </form>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

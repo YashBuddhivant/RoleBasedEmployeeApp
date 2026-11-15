@@ -1,0 +1,28 @@
+﻿@model List<SettingItem>
+@{
+    ViewData["Title"] = "Settings";
+    var perm = (Permission)ViewBag.Permission;
+}
+
+<h2>Settings</h2>
+
+@if (TempData["Msg"] != null)
+{
+    <div class="alert alert-success">@TempData["Msg"]</div>
+}
+
+<form asp-action="Index" method="post">
+    @for (int i = 0; i < Model.Count; i++)
+    {
+        <div class="mb-3">
+            <label class="form-label">@Model[i].SettingKey</label>
+            <input type="hidden" asp-for="@Model[i].SettingKey" />
+            <input asp-for="@Model[i].SettingValue" class="form-control" readonly="@(!perm.CanEdit)" />
+        </div>
+    }
+
+    @if (perm.CanEdit)
+    {
+        <button class="btn btn-success">Save</button>
+    }
+</form>

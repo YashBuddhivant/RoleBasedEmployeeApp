@@ -1,0 +1,49 @@
+﻿@model PermissionMatrixViewModel
+@{
+    ViewData["Title"] = "Roles & Permissions";
+    var perm = (Permission)ViewBag.Permission;
+}
+
+<h2>Roles &amp; Permissions</h2>
+
+@if (TempData["Msg"] != null)
+{
+    <div class="alert alert-success">@TempData["Msg"]</div>
+}
+
+<form asp-action="Index" method="get" class="mb-3">
+    <label class="me-2">Role:</label>
+    <select name="roleId" asp-items="(SelectList)ViewBag.Roles"
+            class="form-select d-inline-block w-auto"
+            onchange="this.form.submit()"></select>
+</form>
+
+<form asp-action="Index" method="post">
+    <input type="hidden" asp-for="RoleId" />
+
+    <table class="table table-striped">
+        <thead>
+            <tr><th>Menu</th><th>View</th><th>Add</th><th>Edit</th><th>Delete</th></tr>
+        </thead>
+        <tbody>
+            @for (int i = 0; i < Model.Rows.Count; i++)
+            {
+                <tr>
+                    <td>
+                        @Model.Rows[i].Title
+                        <input type="hidden" asp-for="Rows[i].MenuId" />
+                    </td>
+                    <td><input type="checkbox" asp-for="Rows[i].CanView" disabled="@(!perm.CanEdit)" /></td>
+                    <td><input type="checkbox" asp-for="Rows[i].CanAdd" disabled="@(!perm.CanEdit)" /></td>
+                    <td><input type="checkbox" asp-for="Rows[i].CanEdit" disabled="@(!perm.CanEdit)" /></td>
+                    <td><input type="checkbox" asp-for="Rows[i].CanDelete" disabled="@(!perm.CanEdit)" /></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    @if (perm.CanEdit)
+    {
+        <button class="btn btn-success">Save</button>
+    }
+</form>

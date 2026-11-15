@@ -1,0 +1,49 @@
+﻿@model Employee
+
+<div class="mb-3">
+    <label asp-for="Name" class="form-label"></label>
+    <input asp-for="Name" class="form-control" />
+    <span asp-validation-for="Name" class="text-danger"></span>
+</div>
+
+<div class="mb-3">
+    <label asp-for="Gender" class="form-label"></label>
+    <select asp-for="Gender" class="form-select">
+        <option value="">-- Select --</option>
+        <option>Male</option>
+        <option>Female</option>
+        <option>Other</option>
+    </select>
+    <span asp-validation-for="Gender" class="text-danger"></span>
+</div>
+
+<div class="mb-3">
+    <label asp-for="Age" class="form-label"></label>
+    <input asp-for="Age" class="form-control" />
+    <span asp-validation-for="Age" class="text-danger"></span>
+</div>
+
+<div class="mb-3">
+    <label asp-for="DepartmentId" class="form-label"></label>
+    <select asp-for="DepartmentId" asp-items="(IEnumerable<SelectListItem>)ViewBag.Departments" class="form-select">
+        <option value="">-- None --</option>
+    </select>
+</div>
+
+<div class="mb-3">
+    <label asp-for="Designation" class="form-label"></label>
+    <input asp-for="Designation" class="form-control" />
+    <span asp-validation-for="Designation" class="text-danger"></span>
+</div>
+
+<div class="mb-3">
+    <label asp-for="City" class="form-label"></label>
+    <input asp-for="City" class="form-control" />
+    <span asp-validation-for="City" class="text-danger"></span>
+</div>
+
+<div class="mb-3">
+    <label asp-for="JoinDate" class="form-label"></label>
+    <input asp-for="JoinDate" class="form-control" />
+    <span asp-validation-for="JoinDate" class="text-danger"></span>
+</div>
